@@ -5,13 +5,19 @@ using Unity.Mathematics;
 
 public class CameraController : MonoBehaviour 
 {
+    public static CameraController instance;
     public float sensitivityX = 15F;
     public float sensitivityY = 15F;
     float currentRotationY = 0;
     public float currentRotationX = 0;
     public Transform cameraRig;
+    void Awake()
+    {
+        instance = this;
+    }
     void Update ()
     {
+        if (PlayerStateManager.instance.focused) return;
         //Gets rotational input from the mouse
         float rotationY = Input.GetAxis("Mouse Y") * sensitivityY;
         float rotationX = Input.GetAxis("Mouse X") * sensitivityX;
@@ -34,5 +40,10 @@ public class CameraController : MonoBehaviour
     float CorrectRotation(float rotation){
         rotation = rotation % 360;
         return rotation;
+    }
+
+    public void FocusOnObject(Vector3 cameraDirection){
+        cameraRig.rotation = Quaternion.Euler(cameraDirection);
+        
     }
 }

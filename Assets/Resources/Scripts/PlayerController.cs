@@ -6,20 +6,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    CameraController cameraController;
+
+    public static PlayerController instance;
     Rigidbody thisRigidbody;
     public float speed = 5;
-
+    void Awake()
+    {
+        instance = this;   
+    }
     void Start()
     {
-        cameraController = GetComponent<CameraController>();
         thisRigidbody = GetComponent<Rigidbody>();
     }
     void Update()
     {   
+        if (PlayerStateManager.instance.focused) return;
+
         float forwardInput = Input.GetAxisRaw("Vertical");
         float sideInput = Input.GetAxisRaw("Horizontal");
-        float rotation = cameraController.currentRotationX * Mathf.Deg2Rad;
+        float rotation = CameraController.instance.currentRotationX * Mathf.Deg2Rad;
         if (forwardInput != 0){
             Vector3 direction = new Vector3(Mathf.Sin(rotation), 0, Mathf.Cos(rotation));
             thisRigidbody.AddForce(direction * speed * forwardInput);
@@ -30,5 +35,11 @@ public class PlayerController : MonoBehaviour
             Vector3 direction = new Vector3(Mathf.Sin(rotation + directionOffset), 0, Mathf.Cos(rotation + directionOffset));
             thisRigidbody.AddForce(direction * speed);
         }
+    }
+
+    public void LockPositionAt(Vector3 position){
+        transform.position = position;
+        thisRigidbody.velocity = Vector3.zero;
+        thisRigidbody.angularVelocity = Vector3.zero;
     }
 }
