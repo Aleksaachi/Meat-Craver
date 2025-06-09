@@ -1,35 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemSpot : Interactable
 {
+    public Action<ItemSpot> placedNewItem;
     public GameObject itemInSpot;
     public Item.TypeOfItem filter;
     public bool takeOnly;
     public override void Interact()
     {
-        if (PlayerInteractor.instance.rightHand.transform.childCount == 1){
+        if (PlayerInteractor.instance.rightHand.transform.childCount == 1)
+        {
             if (takeOnly) return;
-            
+
             ItemInstance handItem = PlayerInteractor.instance.heldItem.GetComponent<ItemInstance>();
             if (handItem.thisItem.itemType != filter && filter != Item.TypeOfItem.notag) return;
 
-            if (itemInSpot == null){
+            if (itemInSpot == null)
+            {
                 handItem.PutDown(this);
-            }else{
+
+                placedNewItem?.Invoke(this);
+            }
+            else
+            {
                 ItemInstance currentItem = itemInSpot.GetComponent<ItemInstance>();
 
                 handItem.PutDown(this);
                 currentItem.Grab();
+
+                placedNewItem?.Invoke(this);
             }
-        }else if (itemInSpot != null){
+        }
+        else if (itemInSpot != null)
+        {
             ItemInstance currentItem = itemInSpot.GetComponent<ItemInstance>();
             currentItem.Grab();
         }
     }
 
-    public void SpawnItem(Item item){
+    public void SpawnItem(Item item)
+    {
         if (itemInSpot == null)
         {
             Item.SpawnItemOfType(this, item);
@@ -38,9 +52,12 @@ public class ItemSpot : Interactable
         {
             Debug.Log("Can't spawn a new item here. There is already an item in this slot.");
         }
+        
+        placedNewItem?.Invoke(this);
     }
 
-    public void ClearItem(){
+    public void ClearItem()
+    {
         Destroy(itemInSpot);
         itemInSpot = null;
     }
