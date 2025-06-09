@@ -27,13 +27,13 @@ public class PlayerController : MonoBehaviour
         float rotation = CameraController.instance.currentRotationX * Mathf.Deg2Rad;
         if (forwardInput != 0){
             Vector3 direction = new Vector3(Mathf.Sin(rotation), 0, Mathf.Cos(rotation));
-            thisRigidbody.AddForce(direction * speed * forwardInput);
+            thisRigidbody.AddForce(direction * speed * forwardInput * Time.deltaTime);
         }   
 
         if (sideInput != 0){
             float directionOffset = 90 * Mathf.Deg2Rad * sideInput;
             Vector3 direction = new Vector3(Mathf.Sin(rotation + directionOffset), 0, Mathf.Cos(rotation + directionOffset));
-            thisRigidbody.AddForce(direction * speed);
+            thisRigidbody.AddForce(direction * speed * Time.deltaTime);
         }
     }
 

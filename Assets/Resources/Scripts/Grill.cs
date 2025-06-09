@@ -25,7 +25,7 @@ public class Grill : MonoBehaviour
                 // Find the dog
                 GameObject sausage = sausageSpots[i].itemInSpot;
                 // Rotated the dog
-                sausage.transform.rotation = Quaternion.Euler(0, 0, sausage.transform.rotation.eulerAngles.z + 180 * Time.deltaTime);
+                sausage.transform.rotation = Quaternion.Euler(sausage.transform.rotation.eulerAngles.x, sausage.transform.rotation.eulerAngles.y, sausage.transform.rotation.eulerAngles.z + 180 * Time.deltaTime);
                 // Cook the dog
                 cookTime[i] += Time.deltaTime;
 

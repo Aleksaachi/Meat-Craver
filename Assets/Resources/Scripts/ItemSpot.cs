@@ -10,6 +10,8 @@ public class ItemSpot : Interactable
     public override void Interact()
     {
         if (PlayerInteractor.instance.rightHand.transform.childCount == 1){
+            if (takeOnly) return;
+            
             ItemInstance handItem = PlayerInteractor.instance.heldItem.GetComponent<ItemInstance>();
             if (handItem.thisItem.itemType != filter && filter != Item.TypeOfItem.notag) return;
 
@@ -28,7 +30,14 @@ public class ItemSpot : Interactable
     }
 
     public void SpawnItem(Item item){
-        Item.SpawnItemOfType(this, item);
+        if (itemInSpot == null)
+        {
+            Item.SpawnItemOfType(this, item);
+        }
+        else
+        {
+            Debug.Log("Can't spawn a new item here. There is already an item in this slot.");
+        }
     }
 
     public void ClearItem(){

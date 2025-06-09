@@ -12,18 +12,31 @@ public class PlayerStateManager : MonoBehaviour
     }
     void Update()
     {
-        if (focused){
-            if (Input.GetKeyDown(KeyCode.Escape)){
-                focused = false;
-                Cursor.lockState = CursorLockMode.Locked;
+        if (focused)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Unfocus();
             }
         }
     }
-    public static void FocusOnObject(Vector3 stayPosition, Vector3 cameraDirection){
+    public static void FocusOnObject(Vector3 stayPosition, Vector3 cameraDirection)
+    {
         PlayerController.instance.LockPositionAt(stayPosition);
         CameraController.instance.FocusOnObject(cameraDirection);
+
         Cursor.lockState = CursorLockMode.None;
+        PlayerInteractor.SetCursorVisibility(false);
 
         instance.focused = true;
+    }
+
+    public static void Unfocus()
+    {
+        instance.focused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        PlayerInteractor.SetCursorVisibility(true);
+
+        PlayerInteractor.SetMouseSprite(PlayerInteractor.instance.defaultCursor);
     }
 }

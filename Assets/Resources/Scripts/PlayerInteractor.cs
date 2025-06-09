@@ -8,17 +8,29 @@ public class PlayerInteractor : MonoBehaviour
     public float maxInteractDistance;
     public Transform rightHand;
     public GameObject heldItem;
+    public Texture2D defaultCursor;
+    public GameObject cursor;
     void Awake()
     {
-        instance = this;   
+        instance = this;
+        SetMouseSprite(defaultCursor);
     }
     void Update()
     {
         if (PlayerStateManager.instance.focused) return;
-        
-        if (Input.GetMouseButtonDown(0)){
+
+        if (Input.GetMouseButtonDown(0))
+        {
             RaycastHit[] hits = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward, maxInteractDistance, LayerMask.GetMask("Interactables"));
             if (hits.Length > 0) hits[0].transform.GetComponent<Interactable>().Interact();
         }
+    }
+    public static void SetCursorVisibility(bool active)
+    {
+        instance.cursor.SetActive(active);
+    }
+    public static void SetMouseSprite(Texture2D newSprite)
+    {
+        Cursor.SetCursor(newSprite, Vector2.zero, CursorMode.Auto);
     }
 }

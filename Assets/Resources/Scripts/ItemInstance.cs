@@ -9,11 +9,10 @@ public class ItemInstance : Interactable
     public ItemSpot spot;
     public override void Interact()
     {
-        if (PlayerInteractor.instance.rightHand.transform.childCount == 0){
-            if (spot != null) spot.itemInSpot = null;
-            Grab();
-        }else{
-            PlayerInteractor.instance.heldItem.GetComponent<ItemInstance>().PutDown(spot);
+        if (spot != null)
+        {
+            spot.Interact();
+        }else if (PlayerInteractor.instance.heldItem == null) {
             Grab();
         }
     }
@@ -31,16 +30,19 @@ public class ItemInstance : Interactable
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    public void PutDown(ItemSpot newSpot){
+    public void PutDown(ItemSpot newSpot)
+    {
         if (newSpot.takeOnly) return;
-        
+
         transform.SetParent(newSpot.transform);
-        transform.localPosition = Vector3.zero;
+        transform.localPosition = thisItem.slotOffset;
+
         GetComponent<Collider>().enabled = true;
         PlayerInteractor.instance.heldItem = null;
         spot = newSpot;
         spot.itemInSpot = gameObject;
 
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        Vector3 newRotation = new Vector3(newSpot.transform.rotation.eulerAngles.x + 180, newSpot.transform.rotation.eulerAngles.y, newSpot.transform.rotation.eulerAngles.z);
+        transform.localRotation = Quaternion.Euler(newRotation);
     }
 }
