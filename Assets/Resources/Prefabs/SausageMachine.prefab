@@ -5231,7 +5231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sausageSpot: {fileID: 8019404171512853025}
-  sausage: {fileID: 11400000, guid: 586b0417e4f889d44bec8b7144bcf8bf, type: 2}
+  sausage: {fileID: 11400000, guid: 8d4f4e10c4667794d801ffeb9afa1ba5, type: 2}
   hiddenUI: {fileID: 0}
   leverHitbox: {fileID: 0}
   leverModel: {fileID: 468793201155458803}

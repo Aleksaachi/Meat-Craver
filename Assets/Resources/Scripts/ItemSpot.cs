@@ -42,6 +42,13 @@ public class ItemSpot : Interactable
         }
     }
 
+    public override void SecondaryInteract()
+    {
+        if (itemInSpot != null)
+        {
+            itemInSpot.GetComponent<ItemInstance>().SecondaryInteract();
+        }
+    }
     public void SpawnItem(Item item)
     {
         if (itemInSpot == null)
@@ -52,7 +59,7 @@ public class ItemSpot : Interactable
         {
             Debug.Log("Can't spawn a new item here. There is already an item in this slot.");
         }
-        
+
         placedNewItem?.Invoke(this);
     }
 

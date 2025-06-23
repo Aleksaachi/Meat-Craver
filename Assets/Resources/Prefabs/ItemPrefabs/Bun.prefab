@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7e71cacbdc122342a188c4ce83b3a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisItem: {fileID: 11400000, guid: 586b0417e4f889d44bec8b7144bcf8bf, type: 2}
+  thisItem: {fileID: 11400000, guid: 8be60d86138bc2c44add8513b31a85d1, type: 2}
   spot: {fileID: 0}
 --- !u!136 &6175164218239876798
 CapsuleCollider:

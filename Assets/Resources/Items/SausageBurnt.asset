@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61b651f5e36470d48baa8d0d68deda0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c277a4005694f14b91673586ca01ae8, type: 3}
   m_Name: SausageBurnt
   m_EditorClassIdentifier: 
   itemType: 1
   prefab: {fileID: 6647442510533615809, guid: 67b98951ec1d32547856761f1542fd26, type: 3}
+  slotOffset: {x: 0, y: 0, z: 0}
+  foodType: 1

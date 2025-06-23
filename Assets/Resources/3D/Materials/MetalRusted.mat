@@ -49,10 +49,10 @@ Material:
     - _Metallic: 0.4
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Rotation: 90
+    - _Rotation: 30
     - _Smoothness: 0.4
     m_Colors:
-    - _Tilling: {r: 5, g: 5, b: 0, a: 0}
+    - _Tilling: {r: 24, g: 24, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3339365886583378491
 MonoBehaviour:

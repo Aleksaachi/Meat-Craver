@@ -259,8 +259,10 @@ MonoBehaviour:
   - {fileID: 6564382815090493551}
   - {fileID: 5926514649583777654}
   - {fileID: 7752881365543753398}
-  sausageCooked: {fileID: 11400000, guid: ef32082788e5d724f894fc8d03a68d82, type: 2}
-  sausageBurnt: {fileID: 11400000, guid: f87c9512f39e791439d605d030af905c, type: 2}
+  sausageCooked: {fileID: 11400000, guid: 6b51b45eab0d6ac4fa0df64a4a0656de, type: 2}
+  sausageBurnt: {fileID: 11400000, guid: 0f624b8c9210881429c54c1f85deff3c, type: 2}
+  timeToCook: 10
+  timeToBurn: 10
 --- !u!1001 &4679250769792617325
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MetalRusted 1
+  m_Name: Grate
   m_Shader: {fileID: -6465566751694194690, guid: d565f0ab71dc9d745aea2100fea68273,
     type: 3}
   m_Parent: {fileID: 0}

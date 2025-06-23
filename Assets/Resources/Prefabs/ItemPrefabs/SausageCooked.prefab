@@ -12,7 +12,7 @@ PrefabInstance:
         type: 3}
       propertyPath: thisItem
       value: 
-      objectReference: {fileID: 11400000, guid: ef32082788e5d724f894fc8d03a68d82,
+      objectReference: {fileID: 11400000, guid: 6b51b45eab0d6ac4fa0df64a4a0656de,
         type: 2}
     - target: {fileID: 4172777587848840368, guid: f20cec79122177944a9cc55a76796f91,
         type: 3}

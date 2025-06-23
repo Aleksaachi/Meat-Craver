@@ -19,10 +19,18 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (PlayerStateManager.instance.focused) return;
 
+
+        // Primary interact
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit[] hits = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward, maxInteractDistance, LayerMask.GetMask("Interactables"));
             if (hits.Length > 0) hits[0].transform.GetComponent<Interactable>().Interact();
+        }
+        // Secondary interact
+        else if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit[] hits = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward, maxInteractDistance, LayerMask.GetMask("Interactables"));
+            if (hits.Length > 0) hits[0].transform.GetComponent<Interactable>().SecondaryInteract();
         }
     }
     public static void SetCursorVisibility(bool active)
