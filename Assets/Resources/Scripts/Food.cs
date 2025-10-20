@@ -5,13 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/New Food")]
 public class Food : Item
 {
-    public Food()
-    {
-        foodStack = new List<Food>
-        {
-            this
-        };
-    }
     public enum FoodItem
     {
         bun,
@@ -22,6 +15,9 @@ public class Food : Item
 
     public List<Food> foodStack;
     public FoodItem foodType;
+    public Sprite badge;
+    public float baseValue;
+    public float penalty;
 
     public override Food GetFood()
     {
@@ -39,5 +35,14 @@ public class Food : Item
         otherItem.transform.localPosition = otherItem.thisItem.slotOffset;
 
         otherItem.GetComponent<Collider>().enabled = false;
+
+        if (thisItem.gameObject == PlayerInteractor.instance.heldItem)
+        {
+            FoodStackUI.instance.FoodStackChanged(thisItem.thisItem.GetFood());
+        }
+        else
+        {
+            FoodStackUI.instance.uiObject.SetActive(false);
+        }
     }
 }

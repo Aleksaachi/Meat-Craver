@@ -15,4 +15,9 @@ MonoBehaviour:
   itemType: 1
   prefab: {fileID: 6647442510533615809, guid: 67b98951ec1d32547856761f1542fd26, type: 3}
   slotOffset: {x: 0, y: 0, z: 0}
+  foodStack:
+  - {fileID: 11400000}
   foodType: 1
+  badge: {fileID: 21300000, guid: 29fc84f7756e72441b789aa916366734, type: 3}
+  baseValue: 0.75
+  penalty: 0.75

@@ -22,6 +22,8 @@ public class ItemInstance : Interactable
     public override void SecondaryInteract()
     {
         // Find the players hand item
+        if (PlayerInteractor.instance.heldItem == null) return;
+        
         ItemInstance handItem = PlayerInteractor.instance.heldItem.GetComponent<ItemInstance>();
         if (handItem == null) return;
 
@@ -33,11 +35,12 @@ public class ItemInstance : Interactable
         {
             // Find a bun
             Food bun = null;
+            Food notBun = null;
             if (thisFood.foodType == Food.FoodItem.bun)
             {
                 bun = thisFood;
+                notBun = mainFood;
             }
-
             if (mainFood.foodType == Food.FoodItem.bun)
             {
                 // Return if both are buns
@@ -47,32 +50,46 @@ public class ItemInstance : Interactable
                     return;
                 }
                 bun = mainFood;
+                notBun = thisFood;
+            }
+
+            // Stop the stacking process if there is already a main and the current item is a main
+            if (notBun.foodType == Food.FoodItem.main)
+            {
+                for (int i = 0; i < bun.foodStack.Count; i++)
+                {
+                    if (bun.foodStack[i].foodType == Food.FoodItem.main)
+                    {
+                        Debug.Log("You cannot double dog!");
+                        return;
+                    }
+                }
             }
 
             // If a bun was found assemble them
             if (bun != null)
             {
-                if (bun == thisFood)
-                {
-                    bun.StackFood(this, handItem);
-                }
-                else
-                {
-                    bun.StackFood(handItem, this);
-                }
+                spot.takeItem?.Invoke(spot);
+                if (bun == thisFood) bun.StackFood(this, handItem);
+                else                 bun.StackFood(handItem, this);  
             }
         }
     }
-
     public void Grab()
     {
         transform.SetParent(PlayerInteractor.instance.rightHand.transform);
         transform.localPosition = Vector3.zero;
         GetComponent<Collider>().enabled = false;
+        UntangleFromSlot(); 
         PlayerInteractor.instance.heldItem = gameObject;
-        UntangleFromSlot();        
+
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        
+        if (thisItem.GetFood() != null)
+        {
+            FoodStackUI.instance.FoodStackChanged(thisItem.GetFood());
+        }
     }
 
     public void PutDown(ItemSpot newSpot)
@@ -89,6 +106,8 @@ public class ItemInstance : Interactable
 
         Vector3 newRotation = new Vector3(newSpot.transform.rotation.eulerAngles.x + 180, newSpot.transform.rotation.eulerAngles.y, newSpot.transform.rotation.eulerAngles.z);
         transform.localRotation = Quaternion.Euler(newRotation);
+
+        FoodStackUI.instance.uiObject.SetActive(false);
     }
 
     public void UntangleFromSlot()
@@ -98,5 +117,10 @@ public class ItemInstance : Interactable
             spot.itemInSpot = null;
         }
         spot = null;
+
+        if (gameObject == PlayerInteractor.instance.heldItem)
+        {
+            PlayerInteractor.instance.heldItem = null;
+        }
     }
 }

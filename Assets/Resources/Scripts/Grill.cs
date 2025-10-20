@@ -13,6 +13,9 @@ public class Grill : MonoBehaviour
 
     public float timeToCook = 10f;
     public float timeToBurn = 10f;
+    public ParticleSystem smokePart;
+    public List<ParticleSystem> heatPart;
+    public int sausageAmount = 0;
 
     void Start()
     {
@@ -22,6 +25,7 @@ public class Grill : MonoBehaviour
             cookStage.Add(0);
 
             sausageSpots[i].placedNewItem += UpdateSpot;
+            sausageSpots[i].takeItem += RemovedSausage;
         }
     }
     void Update()
@@ -43,6 +47,7 @@ public class Grill : MonoBehaviour
                     // Stage 1
                     sausageSpots[i].ClearItem();
                     sausageSpots[i].SpawnItem(sausageCooked);
+                    sausageAmount--;
                     cookStage[i]++;
                 }
                 else if (cookTime[i] > timeToCook + timeToBurn && sausageSpots[i].GetItem().name == "SausageCooked")
@@ -50,6 +55,7 @@ public class Grill : MonoBehaviour
                     // Stage 2
                     sausageSpots[i].ClearItem();
                     sausageSpots[i].SpawnItem(sausageBurnt);
+                    sausageAmount--;
                     cookStage[i]++;
                 }
             }
@@ -64,13 +70,16 @@ public class Grill : MonoBehaviour
 
     void UpdateSpot(ItemSpot spotToUpdate)
     {
+        sausageAmount++;
+        smokePart.Play();
         for (int i = 0; i < sausageSpots.Count; i++)
         {
             if (sausageSpots[i] == spotToUpdate)
             {
+                heatPart[i].Play();
                 cookTime[i] = 0;
                 cookStage[i] = 0;
-                
+
                 if (sausageSpots[i].GetItem().name == "SausageCooked")
                 {
                     // Stage 1
@@ -85,6 +94,23 @@ public class Grill : MonoBehaviour
                 }
 
                 break;
+            }
+        }
+    }
+    void RemovedSausage(ItemSpot spotToUpdate)
+    {
+        sausageAmount--;
+
+        if (sausageAmount == 0)
+        {
+            smokePart.Stop();
+        }
+
+        for (int i = 0; i < sausageSpots.Count; i++)
+        {
+            if (sausageSpots[i] == spotToUpdate)
+            {
+                heatPart[i].Stop();
             }
         }
     }

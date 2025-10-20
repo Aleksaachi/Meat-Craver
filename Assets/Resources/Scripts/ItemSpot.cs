@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class ItemSpot : Interactable
 {
     public Action<ItemSpot> placedNewItem;
+    public Action<ItemSpot> takeItem;
     public GameObject itemInSpot;
     public Item.TypeOfItem filter;
     public bool takeOnly;
@@ -32,12 +33,15 @@ public class ItemSpot : Interactable
                 handItem.PutDown(this);
                 currentItem.Grab();
 
+                takeItem?.Invoke(this);
                 placedNewItem?.Invoke(this);
             }
         }
         else if (itemInSpot != null)
         {
             ItemInstance currentItem = itemInSpot.GetComponent<ItemInstance>();
+
+            takeItem?.Invoke(this);
             currentItem.Grab();
         }
     }

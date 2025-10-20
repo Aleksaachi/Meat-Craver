@@ -13,6 +13,8 @@ public class BreadBox : Interactable
 
     public override void Interact()
     {
+        if (timer != 0 && timer != doorTime) return;
+
         open = !open;
         if (open)
         {

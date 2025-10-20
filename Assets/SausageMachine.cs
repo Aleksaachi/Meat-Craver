@@ -10,7 +10,8 @@ public class SausageMachine : Interactable
     public GameObject leverHitbox;
     public Transform leverModel;
     public Vector3 defaultLeverHitboxPosition;
-    public float verticalThreshold = 0;
+    public float verticalThresholdTop = 0;
+    public float verticalThresholdBottom = 0;
     public float timerHold;
     float timerHoldCurrent;
     bool holdingLever = false;
@@ -23,6 +24,7 @@ public class SausageMachine : Interactable
     void Awake()
     {
         machineShake = GetComponent<Shaking>();
+        hiddenUI.SetActive(false);
     }
     public override void Interact()
     {
@@ -55,7 +57,7 @@ public class SausageMachine : Interactable
         if (holdingLever)
         {
             // Calculate yThreshold
-            float yThreshold = ((leverHitbox.transform.localPosition.y / verticalThreshold) + 1) / 2;
+            float yThreshold = ((-(leverHitbox.transform.localPosition.y+verticalThresholdTop) / (verticalThresholdTop + verticalThresholdBottom)) + 1) / 2;
             yThreshold = Mathf.Clamp01(yThreshold);
             // Update lever rotation and hitbox
             leverModel.localRotation = Quaternion.Euler(Mathf.Lerp(-45, 45, yThreshold), 0, 0);
