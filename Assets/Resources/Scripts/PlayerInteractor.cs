@@ -9,6 +9,7 @@ public class PlayerInteractor : MonoBehaviour
     public Transform rightHand;
     public GameObject heldItem;
     public Texture2D defaultCursor;
+    public Texture2D handCursor;
     public GameObject cursor;
     void Awake()
     {

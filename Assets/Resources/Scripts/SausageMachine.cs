@@ -56,6 +56,7 @@ public class SausageMachine : Interactable
     {
         if (holdingLever)
         {
+            PlayerInteractor.SetMouseSprite(PlayerInteractor.instance.handCursor);
             // Calculate yThreshold
             float yThreshold = ((-(leverHitbox.transform.localPosition.y+verticalThresholdTop) / (verticalThresholdTop + verticalThresholdBottom)) + 1) / 2;
             yThreshold = Mathf.Clamp01(yThreshold);
@@ -98,6 +99,7 @@ public class SausageMachine : Interactable
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 StopHoldingLever();
+                hiddenUI.SetActive(false);
             }
         }
     }

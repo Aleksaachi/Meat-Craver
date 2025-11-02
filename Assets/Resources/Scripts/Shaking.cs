@@ -6,7 +6,12 @@ public class Shaking : MonoBehaviour
 {
     public float shakeStrenght;
     Vector3 defaultRotation;
+    public bool shakeOnAwake;
     bool shaking = false;
+    void Start()
+    {
+        if (shakeOnAwake) StartShaking();
+    }
     void Update()
     {
         if (shaking)

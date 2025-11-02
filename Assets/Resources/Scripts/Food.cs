@@ -26,6 +26,7 @@ public class Food : Item
 
     public void StackFood(ItemInstance thisItem, ItemInstance otherItem)
     {
+        if (foodStack.Count == 5) return;
         foodStack.Add(otherItem.thisItem.GetFood());
 
         otherItem.UntangleFromSlot();

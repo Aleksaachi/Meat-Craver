@@ -27,7 +27,7 @@ public class IngredientBox : Interactable
         Food mainFood = handItem.thisItem.GetFood();
 
         // If the hand item isn't a bun return
-        if (mainFood == null || mainFood.foodType != Food.FoodItem.bun) return;
+        if (mainFood == null || mainFood.foodType != Food.FoodItem.bun || mainFood.foodStack.Count == 5) return;
 
         ItemInstance newFood = Instantiate(ingredient.prefab).GetComponent<ItemInstance>();
         mainFood.StackFood(handItem, newFood);
@@ -35,5 +35,10 @@ public class IngredientBox : Interactable
         amountLeft--;
         float pileZ = Mathf.Lerp(pileLowPoint.z, pileHighPoint.z, amountLeft/10f);
         ingredientPile.transform.localPosition = new Vector3(ingredientPile.transform.localPosition.x, ingredientPile.transform.localPosition.y, pileZ);
+
+        if (amountLeft == 0)
+        {
+            ingredientPile.SetActive(false);
+        }
     }
 }
